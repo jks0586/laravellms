@@ -16,7 +16,6 @@ class Controller extends BaseController
     public $langs = [];
 
 
-
     public function response($status = true)
     {
         $errors = [];
@@ -36,4 +35,5 @@ class Controller extends BaseController
                 'data' => $this->data,
             ]);
     }
+    
 }

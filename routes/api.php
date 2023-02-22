@@ -1,9 +1,8 @@
 <?php
 
-use App\Http\Controllers\AuthController;
 use Illuminate\Http\Request;
-use Illuminate\Routing\RouteGroup;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\PassportAuthController;
 
 use App\Http\Controllers\Lms\DashboardController;
 use App\Http\Controllers\Lms\OrganisationController;
@@ -23,22 +22,12 @@ use App\Http\Controllers\Lms\TimezoneController;
 |--------------------------------------------------------------------------
 |
 | Here is where you can register API routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| is assigned the "api" middleware group. Enjoy building your API!
+| routes are loaded by the RouteServiceProvider and all of them will
+| be assigned to the "api" middleware group. Make something great!
 |
 */
-
-
-Route::group(['namespace' => 'App\Http\Controllers','middleware' => ['cors']], function () {
-
-    Route::post('register',[AuthController::class,'register'])->name('site.register');
-    Route::post('login',[AuthController::class,'login'])->name('site.login');
-
-    // // dahboard routes
-    // Route::get('dashboard/index',[DashboardController::class,'index'])->name('site.dashboard.index');
-    // Route::get('dashboard/admin',[DashboardController::class,'admin'])->name('site.dashboard.admin');
-
-});
+Route::post('register', [PassportAuthController::class, 'register']);
+Route::post('login', [PassportAuthController::class, 'login']);
 
 
 Route::group(['namespace' => 'App\Http\Controllers\Lms','middleware' => ['cors']], function () {
@@ -152,7 +141,6 @@ Route::group(['namespace' => 'App\Http\Controllers\Lms','middleware' => ['cors']
      Route::get('coursecard/autocomplete',[CourseCardController::class,'autocomplete'])->name('lms.coursecard.autocomplete');
 });
 
-
-// Route::middleware(['auth:sanctum'])->get('/user', function (Request $request) {
+// Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 //     return $request->user();
 // });
