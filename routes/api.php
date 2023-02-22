@@ -30,7 +30,7 @@ Route::post('register', [PassportAuthController::class, 'register']);
 Route::post('login', [PassportAuthController::class, 'login']);
 
 
-Route::group(['namespace' => 'App\Http\Controllers\Lms','middleware' => ['cors']], function () {
+Route::group(['namespace' => 'App\Http\Controllers\Lms'], function () {
 
     // dahboard routes
     Route::get('dashboard/index',[DashboardController::class,'index'])->name('site.dashboard.index');
