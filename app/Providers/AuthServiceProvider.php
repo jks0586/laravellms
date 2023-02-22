@@ -23,7 +23,10 @@ class AuthServiceProvider extends ServiceProvider
     public function boot(): void
     {
         // $this->registerPolicies();
-        Passport::hashClientSecrets();
+        // Passport::hashClientSecrets();
+        Passport::tokensExpireIn(now()->addDays(15));
+        Passport::refreshTokensExpireIn(now()->addDays(30));
+        Passport::personalAccessTokensExpireIn(now()->addMonths(6));
         // ResetPassword::createUrlUsing(function (object $notifiable, string $token) {
         //     return config('app.frontend_url')."/password-reset/$token?email={$notifiable->getEmailForPasswordReset()}";
         // });

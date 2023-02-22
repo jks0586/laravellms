@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AuthController;
 use Illuminate\Http\Request;
 use Illuminate\Routing\RouteGroup;
 use Illuminate\Support\Facades\Route;
@@ -28,15 +29,19 @@ use App\Http\Controllers\Lms\TimezoneController;
 */
 
 
-// Route::group(['namespace' => 'App\Http\Controllers'], function () {
-//     // dahboard routes
-//     Route::get('dashboard/index',[DashboardController::class,'index'])->name('site.dashboard.index');
-//     Route::get('dashboard/admin',[DashboardController::class,'admin'])->name('site.dashboard.admin');
+Route::group(['namespace' => 'App\Http\Controllers','middleware' => ['cors']], function () {
 
-// });
+    Route::post('register',[AuthController::class,'register'])->name('site.register');
+    Route::post('login',[AuthController::class,'login'])->name('site.login');
+
+    // // dahboard routes
+    // Route::get('dashboard/index',[DashboardController::class,'index'])->name('site.dashboard.index');
+    // Route::get('dashboard/admin',[DashboardController::class,'admin'])->name('site.dashboard.admin');
+
+});
 
 
-Route::group(['namespace' => 'App\Http\Controllers\Lms'], function () {
+Route::group(['namespace' => 'App\Http\Controllers\Lms','middleware' => ['cors']], function () {
 
     // dahboard routes
     Route::get('dashboard/index',[DashboardController::class,'index'])->name('site.dashboard.index');
