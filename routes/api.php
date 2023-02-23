@@ -28,10 +28,11 @@ use App\Http\Controllers\Lms\TimezoneController;
 */
 Route::post('register', [PassportAuthController::class, 'register']);
 Route::post('login', [PassportAuthController::class, 'login']);
-
+Route::GET('user',function(){
+    return true;
+});
 
 Route::group(['namespace' => 'App\Http\Controllers\Lms'], function () {
-
     // dahboard routes
     Route::get('dashboard/index',[DashboardController::class,'index'])->name('site.dashboard.index');
     Route::get('dashboard/admin',[DashboardController::class,'admin'])->name('site.dashboard.admin');

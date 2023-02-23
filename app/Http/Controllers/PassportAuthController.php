@@ -35,13 +35,13 @@ class PassportAuthController extends Controller
         $this->data['user'] = $user;
         return $this->response();
     }
- 
+
     /**
      * Login
      */
     public function login(Request $request)
     {
-        
+
         $validator = Validator::make($request->all(), [
             'email' => 'required',
             'password' => 'required',
@@ -51,12 +51,12 @@ class PassportAuthController extends Controller
             $this->errors = $validator->errors();
             return $this->response();
         }
-        
+
         $credentials = $request->only('email', 'password');
         $auth = Auth::attempt($credentials);
 
         if (!$auth) {
-            $this->message = __('auth.login.errors.failed');
+            $this->message = __('auth.login.errors');
             return $this->response(false);
         }
 
@@ -65,5 +65,5 @@ class PassportAuthController extends Controller
         $this->data['user'] = $user;
         $this->data['token'] = $token;
         return $this->response();
-    }   
+    }
 }
