@@ -56,7 +56,7 @@ class PassportAuthController extends Controller
         $auth = Auth::attempt($credentials);
 
         if (!$auth) {
-            $this->message = __('auth.login.errors');
+            $this->message = __('auth.login.error');
             return $this->response(false);
         }
 
