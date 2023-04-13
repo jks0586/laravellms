@@ -4,6 +4,8 @@ namespace App\Exceptions;
 
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Throwable;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Validation\ValidationException;
 
 class Handler extends ExceptionHandler
 {
@@ -41,8 +43,34 @@ class Handler extends ExceptionHandler
      */
     public function register(): void
     {
-        $this->reportable(function (Throwable $e) {
-            //
+        // $this->reportable(function (Throwable $e) {
+
+        //     //
+        // });
+
+        $this->renderable(function (ValidationException $exception, $request) {
+            if (! $request->wantsJson()) {
+                // tell Laravel to handle as usual
+                return null;
+            }
+            // print_r($exception->validator->errors()); die;
+            $custom_errors=[];
+            foreach($exception->validator->getMessageBag()->getMessages() as $key=>$error){
+                // $explodeerror=explode(':',$error);
+                $custom_errors[$key] =$error[0];
+            }
+
+            return new JsonResponse([
+                'message' =>'Has an Error',
+                'status' => false,
+                'errors' => $custom_errors,
+            ], JsonResponse::HTTP_UNPROCESSABLE_ENTITY);
+
+            // return new JsonResponse([
+            //     'message' =>'Has an Error',
+            //     'status' => false,
+            //     'errors' => $exception->validator->errors(),
+            // ], JsonResponse::HTTP_UNPROCESSABLE_ENTITY);
         });
     }
 }

@@ -105,9 +105,9 @@ class OrganisationController extends Controller
         'identity_verification_email' => 'required|email|max:255',
         'parent_organisation_id'=>'nullable|numeric',
         'active'=>'nullable|boolean',
-        'use_organisation_structure'=>'nullable||numeric',
-        'use_usi'=>'nullable||numeric',
-        'use_staff_id'=>'nullable||numeric',
+        'use_organisation_structure'=>'nullable||boolean',
+        'use_usi'=>'nullable||boolean',
+        'use_staff_id'=>'nullable||boolean',
         'time_zone'=>'nullable||max:255',
         'eway_customer_id'=>'nullable||numeric',
         'enable_eway'=>'nullable||boolean',
@@ -147,7 +147,12 @@ class OrganisationController extends Controller
 
 
     public function store(Request $request){
-
+        
+        // $this->data['organisation'] = $request->all();
+        // return $this->response(true);
+        // print_r($request->all());
+        // die;
+        // die;
         if ($this->inputValidate($request)) {
 
                 $ogobject = [];
@@ -159,15 +164,12 @@ class OrganisationController extends Controller
                 }
 
                 if ($request->logo) {
-
-
                     $fileName = time() . '_' . $request->file('logo')->getClientOriginalName();
                     $filePath = $request->file('logo')->storeAs('uploads', $fileName, 'public');
                     $ogobject['logo'] = $fileName;
                 }
 
                 if ($request->background_image) {
-
                     $fileName = time() . '_' . $request->file('background_image')->getClientOriginalName();
                     $filePath = $request->file('background_image')->storeAs('uploads', $fileName, 'public');
                     $ogobject['background_image'] = $fileName;
@@ -175,10 +177,14 @@ class OrganisationController extends Controller
 
                 // echo response(json_encode($ogobject));
                 // die('yyy');
+                
                 $organisation = Organisation::create($ogobject);
-
-                return Inertia::render('Lms/Organisation/Admin', ['organisation' => $organisation])->withViewData(['sucsess' => 'Oraganisation has been successfully Created']);
-
+                $this->data['organisation'] = $organisation;
+                $this->message='Organisation has been Created Successfully';
+                return $this->response(true);
+                // echo response(json_encode($ogobject));
+                // die('yyy');
+                // return Inertia::render('Lms/Organisation/Admin', ['organisation' => $organisation])->withViewData(['sucsess' => 'Oraganisation has been successfully Created']);
         }
     }
 
