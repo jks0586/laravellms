@@ -16,6 +16,7 @@ use App\Http\Controllers\Lms\CardController;
 use App\Http\Controllers\Lms\CourseCardController;
 use App\Http\Controllers\Lms\TaxController;
 use App\Http\Controllers\Lms\TimezoneController;
+use App\Http\Controllers\Lms\CountryController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -45,6 +46,14 @@ Route::group(['namespace' => 'App\Http\Controllers\Lms'], function () {
     Route::post('organisation/store',[OrganisationController::class,'store'])->name('lms.organisation.store');
     Route::get('organisation/edit/{id}',[OrganisationController::class,'edit'])->name('lms.organisation.edit');
     Route::post('organisation/update/{id}',[OrganisationController::class,'update'])->name('lms.organisation.update');
+
+    // Country List Section In LMS
+    Route::get('country/index',[CountryController::class,'index'])->name('lms.country.index');
+    Route::get('country/autocomplete',[CountryController::class,'autocomplete'])->name('lms.country.autocomplete');
+    Route::get('country/admin',[CountryController::class,'admin'])->name('lms.country.admin');
+    Route::post('country/store',[CountryController::class,'store'])->name('lms.country.store');
+    Route::post('country/update/{id}',[CountryController::class,'update'])->name('lms.country.update');
+
 
     // Timezon routes in LMS
     Route::get('timezone/index',[TimezoneController::class,'index'])->name('lms.timezone.index');
